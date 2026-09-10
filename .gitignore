@@ -1,0 +1,11 @@
+# Python / Backend ignores
+backend/venv/
+**/__pycache__/
+*.pyc
+
+# Flutter / Frontend ignores
+pasik_flutter/.dart_tool/
+pasik_flutter/.idea/
+pasik_flutter/build/
+pasik_flutter/.flutter-plugins
+pasik_flutter/.flutter-plugins-dependencies
