@@ -9,3 +9,6 @@ pasik_flutter/.idea/
 pasik_flutter/build/
 pasik_flutter/.flutter-plugins
 pasik_flutter/.flutter-plugins-dependencies
+
+backend/.env
+.env
