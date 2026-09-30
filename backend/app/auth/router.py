@@ -18,9 +18,9 @@ def verify_otp_endpoint(payload: OTPVerify, db: Session = Depends(get_db)):
     if not verify_otp(payload.phone, payload.code):
         raise HTTPException(status_code=400, detail="Invalid or expired OTP")
 
-    user = db.query(User).filter(User.phone_number == payload.phone).first()
+    user = db.query(User).filter(User.phone == payload.phone).first()
     if user is None:
-        user = User(phone_number=payload.phone, name="New User")
+        user = User(phone=payload.phone, name="New User")
         db.add(user)
         db.commit()
         db.refresh(user)

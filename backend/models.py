@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, DateTime, ForeignKey, Enum
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, Enum, func
 from sqlalchemy.dialects.postgresql import UUID
 from geoalchemy2 import Geometry
 import uuid
@@ -16,10 +16,18 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    phone_number = Column(String, unique=True, nullable=False)
-    name = Column(String, nullable=False)
+    phone = Column(String, unique=True, index=True, nullable=False)
+    name = Column(String, nullable=False, default="New User")
+    nickname = Column(String, nullable=True)
+
+    active_role = Column(String, nullable=False, default="buyer")
+    # App-level validation only — enforce "buyer" or "seller" in the Pydantic schema, not the DB
+
     location = Column(Geometry(geometry_type="POINT", srid=4326), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+
+    profile_complete = Column(Boolean, nullable=False, default=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
 
 class ItemStatus(str, enum.Enum):
     available = "available"
